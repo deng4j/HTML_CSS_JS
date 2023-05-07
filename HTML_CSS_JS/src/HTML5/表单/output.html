@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <p>output元素用于不同类型的输出，比如计算或脚本输出</p>
+    <form oninput="x.value=parseInt(a.value)+parseInt(b.value)">
+        0<input type="range" id="a" value="50">100 <br>
+        + <br>
+        <input type="number" id="b" value="50"><br>
+        = 
+        <output name="x" for="a b"></output>
+    </form>
+
+    <p><strong>注意:</strong> Edge 12及更早 IE 版本的浏览器不支持 output 元素。</p>
+</body>
+
+</html>

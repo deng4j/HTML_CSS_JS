@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .c>p {
+            background-color: yellow;
+        }
+        /* 子元素选择器 */
+        .c1>p:nth-child(2) {
+            background-color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="c">
+        <span>
+            <p>I will not be styled.</p>
+        </span>
+    </div>
+    <div class="c">
+        <span>My name is Donald</span>
+        <p>I live in Duckburg.</p>
+        <p>I live in Duckburg.</p>
+    </div>
+
+    <div class="c1">
+        <span>My name is Donald</span>
+        <p>I live in Duckburg.</p>
+        <p>I live in Duckburg.</p>
+    </div>
+</body>
+
+</html>

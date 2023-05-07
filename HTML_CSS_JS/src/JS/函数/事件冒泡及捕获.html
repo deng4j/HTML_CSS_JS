@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Document</title>
+    <style>
+        div {
+            position: absolute;
+            top: 10%;
+            width: 480px;
+            height: 380px;
+            background-color: #d7f480;
+        }
+
+        .hidden {
+            visibility: hidden;
+        }
+
+        .showing {
+            visibility: visible;
+        }
+
+        div video {
+            display: block;
+            z-index: -1;
+            width: 400px;
+            margin: 40px auto;
+        }
+    </style>
+</head>
+
+<body>
+    <button>Display video</button>
+
+    <div class="hidden">
+        <video>
+            <source
+                src="https://raw.githubusercontent.com/mdn/learning-area/master/javascript/building-blocks/events/rabbit320.mp4"
+                type="video/mp4">
+            <source
+                src="https://raw.githubusercontent.com/mdn/learning-area/master/javascript/building-blocks/events/rabbit320.webm"
+                type="video/webm">
+            <p>Your browser doesn't support HTML video. Here is a <a href="rabbit320.mp4">link to the video</a> instead.
+            </p>
+        </video>
+    </div>
+
+    <script>
+        const btn = document.querySelector('button');
+        const videoBox = document.querySelector('div');
+
+        //点击后，显示盒子，将div的hidden变为showing
+        function displayVideo() {
+            if (videoBox.getAttribute('class') === 'hidden') {
+                videoBox.setAttribute('class', 'showing');
+                console.log("---displayVideo---");
+            }
+        }
+
+        btn.addEventListener('click', displayVideo);
+
+        //给div添加一个事件监听器，当点击div盒子时，盒子隐藏
+        /**
+         * 当您点击video开始播放的视频时，它会在同一时间导致<div>也被隐藏。
+         * 这是因为video在<div>之内 - video是<div>的一个子元素 - 所以点击video实际上是同时也运行<div>上的事件处理程序。
+         */
+        videoBox.addEventListener('click', () => videoBox.setAttribute('class', 'hidden'));
+
+        const video = document.querySelector('video');
+        //给video添加一个事件监听器，当单击视频本身，这个视频将开始播放。
+        video.addEventListener('click', e => {
+            e.stopPropagation(); //防止扩大冒泡链
+            video.play();
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h2>Canvas 坐标、路径</h2>
+    <p>canvas 是一个二维网格。<br>canvas 的左上角坐标为 (0,0)</p>
+    <canvas id="myCanvas2" width="200" height="100" style="border:1px solid #d3d3d3;">
+        您的浏览器不支持 HTML5 canvas 标签。
+    </canvas>
+</body>
+<script>
+    // 定义开始坐标(0,0), 和结束坐标 (200,100)。然后使用 stroke() 方法来绘制线条
+    var c=document.getElementById("myCanvas2");
+    var ctx=c.getContext("2d");
+    ctx.moveTo(0,0);
+    ctx.lineTo(200,100);
+    ctx.stroke();
+</script>
+</html>

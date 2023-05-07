@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>介绍：</h1>
+    <p>canvas标签定义图形，比如图表和其他图像，您必须使用脚本来绘制图形。</p>
+    <p>Canvas 是逐像素进行渲染的。在 canvas 中，一旦图形被绘制完成，它就不会继续得到浏览器的关注。如果其位置发生变化，那么整个场景也需要重新绘制，包括任何或许已被图形覆盖的对象。</p>
+    <p>依赖分辨率</p>
+    <p>不支持事件处理器</p>
+    <p>弱的文本渲染能力</p>
+    <p>能够以 .png 或 .jpg 格式保存结果图像</p>
+    <p>最适合图像密集型的游戏，其中的许多对象会被频繁重绘</p>
+
+    <h1>案例：</h1>
+
+    <h2>通过canvas元素来绘制</h2>
+    <canvas id="myCanvas" width="200" height="100" style="border:1px solid #000000;">
+        您的浏览器不支持 HTML5 canvas 标签。
+    </canvas>
+
+    <h2>使用 JavaScript 来绘制图像</h2>
+    <p>canvas 元素本身是没有绘图能力的。所有的绘制工作必须在 JavaScript 内部完成</p>
+    <canvas id="myCanvas1" width="200" height="100" style="border:1px solid #c3c3c3;">
+        您的浏览器不支持 HTML5 canvas 标签。
+    </canvas>
+</body>
+<script>
+    // 使用 JavaScript 来绘制图像
+    var c=document.getElementById("myCanvas1");
+    var ctx=c.getContext("2d");
+    ctx.fillStyle="#FF0000";
+    ctx.fillRect(0,0,150,75);
+</script>
+</html>

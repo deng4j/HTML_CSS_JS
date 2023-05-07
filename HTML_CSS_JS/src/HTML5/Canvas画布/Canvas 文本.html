@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h2>Canvas 文本</h2>
+    <canvas id="myCanvas3" width="200" height="100" style="border:1px solid #d3d3d3;">
+        您的浏览器不支持 HTML5 canvas 标签。
+    </canvas>
+</body>
+<script>
+    // 使用 "Arial" 字体在画布上绘制一个高 30px 的文字（实心）
+    var c=document.getElementById("myCanvas3");
+    var ctx=c.getContext("2d");
+    ctx.font="30px Arial";
+    ctx.fillText("Hello World",10,50);
+</script>
+</html>

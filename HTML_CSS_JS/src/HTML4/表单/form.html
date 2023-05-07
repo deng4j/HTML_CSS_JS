@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <p>HTML 表单表示文档中的一个区域，此区域包含交互控件，将用户收集到的信息发送到 Web 服务器。</p>
+    <p>表单元素是允许用户在表单中输入内容，比如：文本域（textarea）、下拉列表（select）、单选框（radio-buttons）、复选框（checkbox） 等等。</p>
+    <form method="get" action="">
+        First name: <input type="text" name="firstname"><br>
+        Last name: <input type="text" name="lastname"><br>
+        Password: <input type="password" name="password">
+
+        <div>
+            单选按钮:<br>
+            <input type="radio" name="sex" value="male">男<br>
+            <input type="radio" name="sex" value="female">女    
+        </div>
+        <div>
+            复选框:<br>
+            <input type="checkbox" name="vehicle" value="Bike">我喜欢自行车<br>
+            <input type="checkbox" name="vehicle" value="Car">我喜欢小汽车
+        </div>
+        <select name="cars">
+            <option value="volvo">Volvo</option>
+            <option value="saab">Saab</option>
+            <option value="fiat" selected>Fiat</option>
+            <option value="audi">Audi</option>
+            </select>
+        <input type="submit" value="Submit">
+    </form>
+</body>
+</html>
