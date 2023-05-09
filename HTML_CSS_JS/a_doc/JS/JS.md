@@ -57,15 +57,69 @@ console.log(result); // 421
 
 ## 3.数据类型
 
-String：字符串（一串文本）：字符串的值必须用引号（单双均可，必须成对）括起来。避免引号的问题，可以使用转义字符`\`。
+## 1.String
 
-Number：整数或者是小数，或者是科学计数(e)。
+字符串（一串文本）：字符串的值必须用引号（单双均可，必须成对）括起来。避免引号的问题，可以使用转义字符`\`。
 
-Boolean：布尔值，true/false
+ES6新增模板字符串：
 
-Array：数组，用于在单一引用中存储多个值的结构。
+```js
+let name = '张三'; 
+let sayHello = `hello,my name is ${name}`; // hello, my name is zhangsan
+```
 
-Object：对象，JavaScript 里一切皆对象，一切皆可储存在变量里。
+```js
+ let result = { 
+     name: 'zhangsan', 
+     age: 20,
+     sex: '男' 
+ } 
+ let html = ` <div>
+     <span>${result.name}</span>
+     <span>${result.age}</span>
+     <span>${result.sex}</span>
+ </div> `;
+```
+
+```js
+const sayHello = function () { 
+    return '哈哈哈哈 追不到我吧 我就是这么强大';
+ }; 
+ let greet = `${sayHello()} 哈哈哈哈`;
+ console.log(greet); // 哈哈哈哈 追不到我吧 我就是这么强大 哈哈哈哈
+```
+
+## 2.Number
+
+整数或者是小数，或者是科学计数(e)。
+
+## 3.Boolean
+
+布尔值，true/false
+
+## 4.Array
+
+数组，用于在单一引用中存储多个值的结构。
+
+ES6扩展运算符：可以将数组或者对象转为用逗号分隔的参数序列
+
+```js
+let ary = [1, 2, 3];
+...ary  // 1, 2, 3
+```
+
+## 5.Object
+
+对象，JavaScript 里一切皆对象，一切皆可储存在变量里。
+
+## 6.Set
+
+ES6 提供了新的数据结构  Set。它类似于数组，但是成员的值都是唯一的，没有重复的值。
+
+```js
+const s = new Set();
+const set = new Set([1, 2, 3, 4, 4]);//{1, 2, 3, 4}
+```
 
 # 四.运算符
 
@@ -449,7 +503,7 @@ console.log(a.speed);
 // Expected output: 25
 ```
 
-解构赋值：是一种 Javascript 表达式。可以将数组中的值或对象的属性取出，赋值给其他变量。
+`解构`赋值：是一种 Javascript 表达式。可以将数组中的值或对象的属性取出，赋值给其他变量。
 
 ```js
 let a, b, rest;
@@ -467,13 +521,25 @@ console.log(rest);
 // Expected output: Array [30, 40, 50]
 ```
 
+```js
+ let person = { name: 'zhangsan', age: 20 }; 
+ let { name, age } = person;
+ console.log(name); // 'zhangsan' 
+ console.log(age); // 20
+
+ let {name: myName, age: myAge} = person; // myName myAge 属于别名
+ console.log(myName); // 'zhangsan' 
+ console.log(myAge); // 20
+```
+
 # 五.变量
 
-变量可以使用var、let声明
+变量可以使用var、let、const声明
 
 ```js
 let myName;
 let myAge;
+const PI = 3.14;
 ```
 
 **`var` 语句** 用于声明一个函数范围或全局范围的变量，并可将其初始化为一个值（可选）。
@@ -506,6 +572,12 @@ if (x === 1) {
 
 console.log(x);
 // Expected output: 1
+```
+
+`const`声明常量，常量就是值（内存地址）不能变化的量。如果是基本数据类型，不能更改值，如果是复杂数据类型，不能更改地址值
+
+```js
+const PI = 3.14;
 ```
 
 注意：
@@ -606,6 +678,10 @@ function myfunc(var1,var2) {
 myfunc(10,20)
 ```
 
+参数可以是：对象，字面量，函数。
+
+返回值可以是：对象，字面量，函数。
+
 ## 2.匿名函数
 
 ```js
@@ -639,6 +715,92 @@ myGreeting();
 函数内部块是局部作用域，函数内定义的变量和其他东西都在它们自己的单独的范围内，意味着它们被锁在自己独立的隔间中，不能被函数外的代码访问。
 
 函数的最外层被称为全局作用域。在全局作用域内定义的值可以在任意地方访问。
+
+## 4.闭包
+
+**闭包**（closure）是一个函数以及其捆绑的周边环境状态（**lexical environment**，**词法环境**）的引用的组合。换而言之，闭包让开发者可以从内部函数访问外部函数的作用域。
+
+```js
+function init() {
+  var name = "Mozilla"; // name 是一个被 init 创建的局部变量
+  function displayName() { // displayName() 是内部函数，一个闭包
+      alert(name); // 使用了父函数中声明的变量
+  }
+  displayName();
+}
+init();
+```
+
+```js
+function makeAdder(x) {
+  return function(y) {
+    return x + y;
+  };
+}
+
+var add5 = makeAdder(5);
+var add10 = makeAdder(10);
+
+console.log(add5(2));  // 7
+console.log(add10(2)); // 12
+```
+
+## 5.箭头函数
+
+ES6中新增的定义函数的方式。
+
+```js
+() => {} //()：代表是函数； =>：必须要的符号，指向哪一个代码块；{}：函数体
+const fn = () => {}//代表把一个函数赋值给fn
+```
+
+```js
+//普通函数 
+function sum(num1, num2) { 
+     return num1 + num2; 
+ }
+ //es6写法
+ const sum = (num1, num2) => num1 + num2; 
+```
+
+如果形参只有一个，可以省略小括号
+
+```js
+const fn = v => v;
+```
+
+箭头函数不绑定this关键字，箭头函数中的this，指向的是函数定义位置的上下文this
+
+```js
+const obj = { name: '张三'} 
+ function fn () { 
+     console.log(this);//this 指向 是obj对象
+     return () => { 
+         console.log(this);//this 指向 的是箭头函数定义的位置，那么这个箭头函数定义在fn里面，而这个fn指向是的obj对象，所以这个this也指向是obj对象
+     } 
+ } 
+ const resFn = fn.call(obj); 
+ resFn();
+```
+
+## 6.剩余参数
+
+剩余参数语法允许我们将一个不定数量的参数表示为一个数组，不定参数定义方式，这种方式很方便的去声明不知道参数情况下的一个函数
+
+```js
+function sum (first, ...args) {
+     console.log(first); // 10
+     console.log(args); // [20, 30] 
+ }
+ sum(10, 20, 30)
+```
+
+```js
+let students = ['wangwu', 'zhangsan', 'lisi'];
+let [s1, ...s2] = students; 
+console.log(s1);  // 'wangwu' 
+console.log(s2);  // ['zhangsan', 'lisi']
+```
 
 # 九.网页事件
 
@@ -830,10 +992,20 @@ form.onsubmit = function(e) {
      this.name = name;
    }
    var dog = new Dog("旺财");
-   
    ```
 
-4. 工厂模式创建对象
+4. `class`关键字创建的对象
+
+   ```js
+   class Polygon {
+     constructor(height, width) {
+       this.height = height;
+       this.width = width;
+     }
+   }
+   ```
+
+5. 工厂模式创建对象
 
    ```js
    function createDog(name){
@@ -904,6 +1076,67 @@ var person2 = {
     alert('Hi! I\'m ' + this.name + '.');
   }
 }
+```
+
+**改变函数内部 this 指向**：
+
+- call()方法
+
+  ```js
+  var o = {
+  	name: 'andy'
+  }
+   function fn(a, b) {
+        console.log(this);
+        console.log(a+b)
+  };
+  fn(1,2)// 此时的this指向的是window 运行结果为3
+  fn.call(o,1,2)//此时的this指向的是对象o,参数使用逗号隔开,运行结果为3
+  ```
+
+- apply方法
+
+  ```js
+  var o = {
+  	name: 'andy'
+  }
+   function fn(a, b) {
+        console.log(this);
+        console.log(a+b)
+  };
+  fn()// 此时的this指向的是window 运行结果为3
+  fn.apply(o,[1,2])//此时的this指向的是对象o,参数使用数组传递 运行结果为3
+  ```
+
+- bind方法：bind() 方法不会调用函数,但是能改变函数内部this 指向，返回的是原函数改变this之后产生的新函数
+
+  ```js
+   var o = {
+   name: 'andy'
+   };
+  
+  function fn(a, b) {
+  	console.log(this);
+  	console.log(a + b);
+  };
+  var f = fn.bind(o, 1, 2); //此处的f是bind返回的新函数
+  f();//调用新函数  this指向的是对象o 参数使用逗号隔开
+  ```
+
+## 3.static关键字
+
+```js
+class ClassWithStaticMethod {
+  static staticProperty = 'someValue';
+  static staticMethod() {
+    return 'static method has been called.';
+  }
+  static {
+    console.log('Class static initialization block called');
+  }
+}
+
+console.log(ClassWithStaticMethod.staticProperty);
 ```
 
 # 十一.对象原型
@@ -1165,7 +1398,7 @@ if (somethingBadHappened) {
 }
 ```
 
-# 十三.异步JavaScript
+# 十四.异步JavaScript
 
 ## 1.同步
 
@@ -1569,7 +1802,7 @@ button.addEventListener('click', async () => {
 });
 ```
 
-# 十四.元素操作
+# 十五.元素操作
 
 ## 1.DOM操作
 
@@ -1648,7 +1881,7 @@ para.style.color = 'white';
 para.setAttribute('class', 'highlight');
 ```
 
-# 十五.JS发送Http请求
+# 十六.JS发送Http请求
 
 ```js
 // 调用 `fetch()`，传入 URL。
@@ -1692,7 +1925,7 @@ try {
 }
 ```
 
-# 十六.客户端存储
+# 十七.客户端存储
 
 ## 1.cookies
 
@@ -1702,17 +1935,107 @@ try {
 
 **Web Storage API**提供了一种非常简单的语法，用于存储和检索较小的、由名称和相应值组成的数据项。当您只需要存储一些简单的数据时，比如用户的名字，用户是否登录，屏幕背景使用了什么颜色等等，这是非常有用的。
 
+web storage 数据都包含在浏览器内两个类似于对象的结构中：
 
+- sessionStorage：只要浏览器开着，数据就会一直保存 (关闭浏览器时数据会丢失)
+
+  ```js
+  // 保存数据到 sessionStorage
+  sessionStorage.setItem('key', 'value');
+  
+  // 从 sessionStorage 获取数据
+  let data = sessionStorage.getItem('key');
+  
+  // 从 sessionStorage 删除保存的数据
+  sessionStorage.removeItem('key');
+  
+  // 从 sessionStorage 删除所有保存的数据
+  sessionStorage.clear();
+  ```
+
+- localStorage：一直保存数据，甚至到浏览器关闭又开启后也是这样。
+
+  ```js
+  //存
+  localStorage.setItem('name','Chris');
+  
+  //取
+  var myName = localStorage.getItem('name');
+  
+  //删除
+  localStorage.removeItem('name');
+  ```
 
 ## 3.IndexedDB
 
 IndexedDB API为浏览器提供了一个完整的数据库系统来存储复杂的数据。这可以用于存储从完整的用户记录到甚至是复杂的数据类型，如音频或视频文件。
 
+# 十八.类型化数组
 
+**JavaScript 类型化数组**（typed array）是一种类似数组的对象，并提供了一种用于在内存缓冲区中访问原始二进制数据的机制。
 
-[客户端存储 - 学习 Web 开发 | MDN (mozilla.org)](https://developer.mozilla.org/zh-CN/docs/Learn/JavaScript/Client-side_web_APIs/Client-side_storage)
+`Array`存储的对象能动态增多和减少，并且可以存储任何 JavaScript 值。JavaScript 引擎会做一些内部优化，以便对数组的操作可以很快。然而，随着 Web 应用程序变得越来越强大，尤其一些新增加的功能例如：音频视频编辑、访问 WebSockets 的原始数据等，很明显有些时候如果使用 JavaScript 代码可以快速方便地通过类型化数组来操作原始的二进制数据将会非常有帮助。JavaScript 类型化数组中的每一个元素都是原始二进制值，而二进制值采用多种支持的格式之一（从 8 位整数到 64 位浮点数）。
 
+## 1.类型数组架构
 
+为了达到最大的灵活性和效率，JavaScript 类型化数组将实现拆分为**缓冲**和**视图**两部分。
+
+- 缓冲（由`ArrayBuffer`对象实现）描述的是一个数据分块。缓冲没有格式可言，并且不提供访问其内容的机制。
+- 为了访问在缓冲对象中包含的内存，你需要使用视图。视图提供了上下文——即数据类型、起始偏移量和元素数——将数据转换为实际有类型的数组。
+
+![typed_arrays](assist/typed_arrays.png)
+
+`ArrayBuffer`是一种数据类型，用来表示一个通用的、固定长度的二进制数据缓冲区。你不能直接操作 ArrayBuffer 中的内容；你需要创建一个类型化数组的视图或一个描述缓冲数据格式的`DataView`，使用它们来读写缓冲区中的内容。
+
+`类型化数组视图`具有自描述性的名字和所有常用的数值类型像 `Int8`、`Uint32`、`Float64` 等等。有一种特殊类型的数组 `Uint8ClampedArray`。它仅操作 0 到 255 之间的数值。
+
+# 十九.并发模型与事件循环
+
+JavaScript 有一个基于**事件循环**的并发模型，事件循环负责执行代码、收集和处理事件以及执行队列中的子任务。
+
+![the_javascript_runtime_environment_example](assist/the_javascript_runtime_environment_example.svg)
+
+## 1.栈
+
+函数调用形成了一个由若干帧组成的栈。
+
+## 2.堆
+
+对象被分配在堆中，堆是一个用来表示一大块（通常是非结构化的）内存区域的计算机术语。
+
+## 3.队列
+
+一个 JavaScript 运行时包含了一个待处理消息的消息队列。每一个消息都关联着一个用以处理这个消息的回调函数。
+
+在`事件循环`期间的某个时刻，运行时会从最先进入队列的消息开始处理队列中的消息。被处理的消息会被移出队列，并作为输入参数来调用与之关联的函数。正如前面所提到的，调用一个函数总是会为其创造一个新的栈帧。
+
+函数的处理会一直进行到执行栈再次为空为止；然后事件循环将会处理队列中的下一个消息（如果还有的话）。
+
+## 4.事件循环
+
+之所以称之为 **事件循环**，是因为它经常按照类似如下的方式来被实现：
+
+```js
+while (queue.waitForMessage()) {
+  queue.processNextMessage();
+}
+```
+
+`queue.waitForMessage()` 会同步地等待消息到达 (如果当前没有任何消息等待被处理)。
+
+- **执行至完成**：每一个消息完整地执行后，其他消息才会被执行。
+
+- **添加消息**：在浏览器里，每当一个事件发生并且有一个事件监听器绑定在该事件上时，一个消息就会被添加进消息队列。如果没有事件监听器，这个事件将会丢失。所以当一个带有点击事件处理器的元素被点击时，就会像其他事件一样产生一个类似的消息。
+
+  函数`setTimeout`接受两个参数：待加入队列的消息和一个时间值（可选，默认为 0）。这个时间值代表了消息被实际加入到队列的最小延迟时间。如果队列中没有其他消息并且栈为空，在这段延迟时间过去之后，消息会被马上处理。但是，如果有其他消息，`setTimeout` 消息必须等待其他消息处理完。因此第二个参数仅仅表示最少延迟时间，而非确切的等待时间。
+
+- **零延迟**：零延迟并不意味着回调会立即执行。以 0 为第二参数调用 `setTimeout` 并不表示在 0 毫秒后就立即调用回调函数。其等待的时间取决于队列里待处理的消息数量。
+
+- **多个运行时互相通信**：一个 web worker 或者一个跨域的 `iframe` 都有自己的栈、堆和消息队列。两个不同的运行时只能通过`postMessage`方法进行通信。如果另一个运行时侦听 `message` 事件，则此方法会向该运行时添加消息。
+
+## 5.永不阻塞
+
+JavaScript 的事件循环模型与许多其他语言不同的一个非常有趣的特性是，它永不阻塞。处理 I/O 通常通过事件和回调来执行，所以当一个应用正等待一个 IndexedDB查询返回或者一个`XHR`请求返回时，它仍然可以处理其他事情，比如用户输入。
 
 
 
