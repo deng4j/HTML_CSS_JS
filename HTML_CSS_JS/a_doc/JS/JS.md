@@ -1494,6 +1494,9 @@ Promise 有三种状态：
 
 ### 5.1 fetch()
 
+- Fetch API是新的ajax解决方案 Fetch会返回Promise
+- **fetch不是ajax的进一步封装，而是原生js，没有使用XMLHttpRequest对象**。
+
 ```js
 const fetchPromise = fetch('https://mdn.github.io/learning-area/javascript/apis/fetching-data/can-store/products.json');
 
@@ -1517,6 +1520,70 @@ console.log("已发送请求……");
 Promise { <state>: "pending" }
 已发送请求……
 已收到响应：200
+```
+
+------
+
+**fetch API  中的 HTTP  请求**
+
+```js
+fetch('http://localhost:3000/books?id=123', {
+  # get 请求可以省略不写 默认的是GET 
+  method: 'get'
+})
+  .then(function(data) {
+  # 它返回一个Promise实例对象，用于获取后台返回的数据
+  return data.text();
+  }).then(function(data) {
+    # 在这个then里面我们能拿到最终的数据  
+    console.log(data)
+    });
+```
+
+```js
+fetch('http://localhost:3000/books/789', {
+  method: 'delete'
+})
+  .then(function(data) {
+  return data.text();
+}).then(function(data) {
+  console.log(data)
+});
+```
+
+```js
+fetch('http://localhost:3000/books', {
+                method: 'post',
+            	# 传递数据 
+                body: 'uname=lisi&pwd=123',
+            	# 设置请求头 
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }
+            })
+            .then(function(data) {
+                return data.text();
+            }).then(function(data) {
+                console.log(data)
+            });
+```
+
+```js
+fetch('http://localhost:3000/books/123', {
+                method: 'put',
+                body: JSON.stringify({
+                    uname: '张三',
+                    pwd: '789'
+                }),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(function(data) {
+                return data.text();
+            }).then(function(data) {
+                console.log(data)
+            });
 ```
 
 ### 5.2 链式使用 Promise
@@ -1801,6 +1868,135 @@ button.addEventListener('click', async () => {
   }
 });
 ```
+
+## 8.axios
+
+- 基于promise用于浏览器和node.js的http客户端
+- 支持浏览器和node.js
+- 支持promise
+- 能拦截请求和响应
+- 自动转换JSON数据
+- 能转换请求和响应数据
+
+```js
+axios.get('http://localhost:3000/adata').then(function(ret){ 
+  #  拿到 ret 是一个对象，所有的对象都存在 ret 的data 属性里面
+  // 注意data属性是固定的用法，用于获取后台的实际数据
+  // console.log(ret.data)
+  console.log(ret)
+  })
+```
+
+```js
+// 通过params形式传递参数 
+axios.get('http://localhost:3000/axios', {
+      params: {
+        id: 789
+      }
+    }).then(function(ret){
+      console.log(ret.data)
+    })
+```
+
+```js
+// axios delete 请求传参，传参的形式和 get 请求一样
+axios.delete('http://localhost:3000/axios', {
+  params: {
+    id: 111
+  }
+}).then(function(ret){
+  console.log(ret.data)
+})
+```
+
+```js
+// axios 的 post 请求
+// 通过选项传递参数
+axios.post('http://localhost:3000/axios', {
+  uname: 'lisi',
+  pwd: 123
+}).then(function(ret){
+  console.log(ret.data)
+})
+
+// 通过 URLSearchParams传递参数
+var params = new URLSearchParams();
+params.append('uname', 'zhangsan');
+params.append('pwd', '111');
+axios.post('http://localhost:3000/axios', params).then(function(ret){
+  console.log(ret.data)
+})
+```
+
+```js
+// axios put 请求传参和post请求一样 
+axios.put('http://localhost:3000/axios/123', {
+  uname: 'lisi',
+  pwd: 123
+}).then(function(ret){
+  console.log(ret.data)
+})
+```
+
+------
+
+**axios 全局配置**
+
+```js
+#  配置公共的请求头 
+axios.defaults.baseURL = 'https://api.example.com';
+#  配置 超时时间
+axios.defaults.timeout = 2500;
+#  配置公共的请求头
+axios.defaults.headers.common['Authorization'] = AUTH_TOKEN;
+# 配置公共的 post 的 Content-Type
+axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
+```
+
+**axios 拦截器**
+
+- 请求拦截器：作用是在请求发送前进行一些操作；例如在每个请求体里加上token，统一做了处理如果以后要改也非常容易
+- 响应拦截器：作用是在接收到响应后进行一些操作；例如在服务器返回登录状态失效，需要重新登录的时候，跳转到登录页
+
+```js
+# 1. 请求拦截器 
+axios.interceptors.request.use(function(config) {
+  console.log(config.url)
+  # 1.1  任何请求都会经过这一步   在发送请求之前做些什么   
+  config.headers.mytoken = 'nihao';
+  # 1.2  这里一定要return   否则配置不成功  
+  return config;
+}, function(err){
+  #1.3 对请求错误做点什么    
+  console.log(err)
+})
+```
+
+```js
+#2. 响应拦截器 
+axios.interceptors.response.use(function(res) {
+  #2.1  在接收响应做些什么  
+  var data = res.data;
+  return data;
+}, function(err){
+  #2.2 对响应错误做点什么  
+  console.log(err)
+})
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 # 十五.元素操作
 
