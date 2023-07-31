@@ -2,6 +2,8 @@
 
 JavaScript 是一种多范式的动态语言，它包含类型、运算符、标准内置（built-in）对象和方法。它的语法来源于 Java 和 C，所以这两种语言的许多语法特性同样适用于 JavaScript。JavaScript 通过原型链而不是类来支持**面向对象编程**。JavaScript 同样支持函数式编程——因为它们也是对象，函数也可以被保存在变量中，并且像其他对象一样被传递。
 
+[MDN Web Docs (mozilla.org)](https://developer.mozilla.org/zh-CN/)
+
 # 二.注释
 
 ```js
@@ -503,7 +505,7 @@ console.log(a.speed);
 // Expected output: 25
 ```
 
-`解构`赋值：是一种 Javascript 表达式。可以将数组中的值或对象的属性取出，赋值给其他变量。
+**`解构`赋值**：是一种 Javascript 表达式。可以将数组中的值或对象的属性取出，赋值给其他变量。
 
 ```js
 let a, b, rest;
@@ -963,6 +965,61 @@ form.onsubmit = function(e) {
 ### 2.7事件委托
 
 冒泡还允许我们利用事件委托——这个概念依赖于这样一个事实，如果你想要在大量子元素中单击任何一个都可以运行一段代码，您可以将事件监听器设置在其父节点上，并让子节点上发生的事件冒泡到父节点上，而不是每个子节点单独设置事件监听器。
+
+## 3.自定义事件
+
+**事件的创建**：
+
+```js
+// 使用Event构造器创建事件
+var myEvent = new Event('event_name');
+
+// 为了能够传递数据，就需要使用 CustomEvent 构造器创建事件
+var myEvent = new CustomEvent('event_name', {
+    detail:{
+        // 将需要传递的数据写在detail中，以便在EventListener中获取
+        // 数据将会在event.detail中得到
+    },
+});
+```
+
+**事件的监听**：
+
+JS的EventListener是根据事件的名称来进行监听的，比如我们在上文中已经创建了一个名称为**‘event_name’** 的事件，那么当某个元素需要监听它的时候，就需要创建相应的监听器：
+
+```js
+//假设listener注册在window对象上
+window.addEventListener('event_name', function(event){
+    // 如果是CustomEvent，传入的数据在event.detail中
+    console.log('得到数据为：', event.detail);
+
+    // ...后续相关操作
+});
+```
+
+至此，window对象上就有了对**‘event_name’** 这个事件的监听器，当window上触发这个事件的时候，相关的callback就会执行。
+
+**事件的触发**：
+
+对于一些内置（built-in）的事件，通常都是有一些操作去做触发，比如鼠标单击对应MouseEvent的click事件，利用鼠标（ctrl+滚轮上下）去放大缩小页面对应WheelEvent的resize事件。
+然而，自定义的事件由于不是JS内置的事件，所以我们需要在JS代码中去显式地触发它。方法是使用 dispatchEvent 去触发（IE8低版本兼容，使用fireEvent）：
+
+```js
+// 首先需要提前定义好事件，并且注册相关的EventListener
+var myEvent = new CustomEvent('event_name', { 
+    detail: { title: 'This is title!'},
+});
+window.addEventListener('event_name', function(event){
+    console.log('得到标题为：', event.detail.title);
+});
+// 随后在对应的元素上触发该事件
+if(window.dispatchEvent) {  
+    window.dispatchEvent(myEvent);
+} else {
+    window.fireEvent(myEvent);
+}
+// 根据listener中的callback函数定义，应当会在console中输出 "得到标题为： This is title!"
+```
 
 # 十.JavaScript 对象
 
@@ -1869,135 +1926,6 @@ button.addEventListener('click', async () => {
 });
 ```
 
-## 8.axios
-
-- 基于promise用于浏览器和node.js的http客户端
-- 支持浏览器和node.js
-- 支持promise
-- 能拦截请求和响应
-- 自动转换JSON数据
-- 能转换请求和响应数据
-
-```js
-axios.get('http://localhost:3000/adata').then(function(ret){ 
-  #  拿到 ret 是一个对象，所有的对象都存在 ret 的data 属性里面
-  // 注意data属性是固定的用法，用于获取后台的实际数据
-  // console.log(ret.data)
-  console.log(ret)
-  })
-```
-
-```js
-// 通过params形式传递参数 
-axios.get('http://localhost:3000/axios', {
-      params: {
-        id: 789
-      }
-    }).then(function(ret){
-      console.log(ret.data)
-    })
-```
-
-```js
-// axios delete 请求传参，传参的形式和 get 请求一样
-axios.delete('http://localhost:3000/axios', {
-  params: {
-    id: 111
-  }
-}).then(function(ret){
-  console.log(ret.data)
-})
-```
-
-```js
-// axios 的 post 请求
-// 通过选项传递参数
-axios.post('http://localhost:3000/axios', {
-  uname: 'lisi',
-  pwd: 123
-}).then(function(ret){
-  console.log(ret.data)
-})
-
-// 通过 URLSearchParams传递参数
-var params = new URLSearchParams();
-params.append('uname', 'zhangsan');
-params.append('pwd', '111');
-axios.post('http://localhost:3000/axios', params).then(function(ret){
-  console.log(ret.data)
-})
-```
-
-```js
-// axios put 请求传参和post请求一样 
-axios.put('http://localhost:3000/axios/123', {
-  uname: 'lisi',
-  pwd: 123
-}).then(function(ret){
-  console.log(ret.data)
-})
-```
-
-------
-
-**axios 全局配置**
-
-```js
-#  配置公共的请求头 
-axios.defaults.baseURL = 'https://api.example.com';
-#  配置 超时时间
-axios.defaults.timeout = 2500;
-#  配置公共的请求头
-axios.defaults.headers.common['Authorization'] = AUTH_TOKEN;
-# 配置公共的 post 的 Content-Type
-axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
-```
-
-**axios 拦截器**
-
-- 请求拦截器：作用是在请求发送前进行一些操作；例如在每个请求体里加上token，统一做了处理如果以后要改也非常容易
-- 响应拦截器：作用是在接收到响应后进行一些操作；例如在服务器返回登录状态失效，需要重新登录的时候，跳转到登录页
-
-```js
-# 1. 请求拦截器 
-axios.interceptors.request.use(function(config) {
-  console.log(config.url)
-  # 1.1  任何请求都会经过这一步   在发送请求之前做些什么   
-  config.headers.mytoken = 'nihao';
-  # 1.2  这里一定要return   否则配置不成功  
-  return config;
-}, function(err){
-  #1.3 对请求错误做点什么    
-  console.log(err)
-})
-```
-
-```js
-#2. 响应拦截器 
-axios.interceptors.response.use(function(res) {
-  #2.1  在接收响应做些什么  
-  var data = res.data;
-  return data;
-}, function(err){
-  #2.2 对响应错误做点什么  
-  console.log(err)
-})
-```
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 # 十五.元素操作
 
 ## 1.DOM操作
@@ -2233,19 +2161,56 @@ while (queue.waitForMessage()) {
 
 JavaScript 的事件循环模型与许多其他语言不同的一个非常有趣的特性是，它永不阻塞。处理 I/O 通常通过事件和回调来执行，所以当一个应用正等待一个 IndexedDB查询返回或者一个`XHR`请求返回时，它仍然可以处理其他事情，比如用户输入。
 
+# 二十.模块语法
 
+当模块化的概念越来越重要的时候，在es6中，引入了模块的语法
 
+静态的 **`import`** 语句用于导入由另一个模块导出的绑定。无论是否声明了 `strict mode`，导入的模块都运行在严格模式下。在浏览器中，`import` 语句只能在声明了 `type="module"` 的 `script` 的标签中使用。
 
+此外，还有一个类似函数的动态 `import()`，它不需要依赖 `type="module"` 的 script 标签。
 
+Exports/Imports in JS only work on servers, they DO NOT work on local machines
 
+export default和export都能导出一个模块里面的常量，函数，文件，模块等，在其它文件或模块中通过import来导入常量，函数，文件或模块。这样就可以使用它们了。但是，在一个文件或模块中，export、import可以有多个，export default却只能有一个。
 
+```js
+<script type='module'>
+	export default class Observer {}
+</script>
+```
 
+> export default 这个是es6的写法目前有些浏览器不兼容，需要声明告诉浏览器如何执行。必须要加入 module 属性，告诉浏览器这是一个ES6的模块，浏览器对于带有 module  的script标签，都是异步加载，不会造成堵塞浏览器，相当于等到整个界面渲染完成，再执行模块脚本，等同于打开了script标签的defer属性。
 
+导入内容：
 
+```js
+import defaultExport from "module-name"; // 导出默认
+import * as name from "module-name";
+import { export } from "module-name";  // 导出其他
+import { export as alias } from "module-name";
+import { export1 , export2 } from "module-name";
+import { foo , bar } from "module-name/path/to/specific/un-exported/file";
+import { export1 , export2 as alias2 , [...] } from "module-name";
+import defaultExport, { export [ , [...] ] } from "module-name";
+import defaultExport, * as name from "module-name";
+import "module-name";
+var promise = import("module-name");//这是一个处于第三阶段的提案。
+```
 
+导出内容：
 
+```js
+function f1 (){
+    console.log("module - 1 : functino 1")
+}
 
+let b = {
+    name:"test_obj"
+}
 
+let str = "hell绿绿绿"
 
-
-
+export {
+    f1,b,str
+}
+```

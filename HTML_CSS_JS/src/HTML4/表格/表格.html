@@ -9,34 +9,50 @@
 <body>
     <p>
         表格由table标签来定义。每个表格均有若干行（由tr标签定义），每行被分割为若干单元格（由td标签定义）。字母 td 指表格数据（table data），即数据单元格的内容。
+        colspan横跨两列，rowspan横跨两行。
     </p>
     <table border="1">
-        <tr>
-          <th>no</th>
-          <th>c1</th>
-          <th>c2</th>
-          <th>c3</th>
-        </tr>
-        <tr>
-          <td>1</td>
-          <td colspan="2">r1-c12</td>
-          <td rowspan="2">r12-c3</td>
-        </tr>
-        <tr>
-          <td>2</td>
-          <td>2.1</td>
-          <td>2.2</td>
-        </tr>
-        <tr>
-          <td>3</td>
-          <td colspan="2" rowspan="2">r34-c12</td>
-          <td>3.1</td>
-        </tr>
-        <tr>
-          <td>4</td>
-          <td>4.1</td>
-        </tr>
-      </table>
+      <thead>
+          <tr>
+              <!-- 头部单元格 -->
+              <th rowspan="2">姓名</th>
+              <th rowspan="2">手机号</th>
+              <th rowspan="2">操作</th>
+              <th colspan="2">洗车套餐</th>
+              <th colspan="2">抛光打蜡</th>
+          </tr>
+          <tr>
+            <div>
+                <th>套餐价格</th>
+                <th>剩余次数</th>
+            </div>
+            <div>
+              <th>套餐价格</th>
+              <th>剩余次数</th>
+            </div>
+          </tr>
+      </thead>
+      <tbody>
+          <tr>
+            <!-- 标准单元格 - 包含数据 -->
+            <td>1</td>
+            <td>1</td>
+            <td>1</td>
+            <td>1</td>
+            <td>1</td>
+            <td>1</td>
+            <td rowspan="2">1</td> 占两行，下一行就少一个td
+          </tr>
+          <tr>
+            <td>1</td>
+            <td>1</td>
+            <td>1</td>
+            <td>1</td>
+            <td>1</td>
+            <td>1</td>
+          </tr>
+      </tbody>
+  </table>
       
 </body>
 </html>

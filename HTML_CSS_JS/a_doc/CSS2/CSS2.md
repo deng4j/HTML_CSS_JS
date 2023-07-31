@@ -33,6 +33,9 @@ p {
 h1,h2,p {
     color:green;
 }
+
+// 选择#aaa的所有h1、h2后代
+#aaa h1,#aaa h2 {}
 ```
 
 ## 3.嵌套选择器
