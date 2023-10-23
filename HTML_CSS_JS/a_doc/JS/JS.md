@@ -2079,7 +2079,11 @@ web storage 数据都包含在浏览器内两个类似于对象的结构中：
 
 - localStorage：一直保存数据，甚至到浏览器关闭又开启后也是这样。
 
+  **值类型限定为string类型**，所以需要将对象转化为json
+  
   ```js
+  var localStorage=window.localStorage;
+  
   //存
   localStorage.setItem('name','Chris');
   
@@ -2088,6 +2092,9 @@ web storage 数据都包含在浏览器内两个类似于对象的结构中：
   
   //删除
   localStorage.removeItem('name');
+  
+  // 清除当前域名下所有内容
+  localStorage.clear();
   ```
 
 ## 3.IndexedDB
