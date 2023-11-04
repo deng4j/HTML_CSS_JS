@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <ul>
+        <li>1</li>
+        <li id="tow">2</li>
+        <li>3</li>
+    </ul>
+</body>
+<script>
+        window.onload=function(){
+            search();
+        }
+       function search(){
+            var s= document.getElementById("tow");
+            var chils= s.childNodes;  //得到s的全部子节点，空格和换行也会被当作子节点
+            console.log(chils)
+
+            var par=s.parentNode;   //得到s的父节点
+            console.log(par)
+
+            console.log('--------兄弟节点--------')
+            var siblings = par.childNodes
+
+            //去掉 换行和空格节点
+            for(var i=0; i<siblings.length;i++){
+                if(siblings[i].nodeName == "#text" && !/\s/.test(siblings.nodeValue)){
+                    par.removeChild(siblings[i]);
+                }
+            }
+
+            console.log(siblings)
+            for(var i=0;i<siblings.length;i++){
+                console.log(s===siblings[i])
+            }
+       } 
+</script>
+</html>
