@@ -1,0 +1,40 @@
+<html>
+ 
+<head>
+<script>
+function test1() {
+    var textarea = document.getElementById('talkContent');
+    textarea.scrollTop = textarea.scrollHeight;
+}
+ 
+function test2() {
+    var textarea = document.getElementById('talkContent');
+    textarea.scrollTop = 0;
+}
+</script>
+</head>
+ 
+<body>
+<textarea rows="10" cols="15" name="a" id="talkContent"
+onpropertychange="this.scrollTop=this.scrollHeight"
+οnfοcus="this.scrollTop=this.scrollHeight" >
+ttttttt11111
+ttttttt11111
+ttttttt11111
+ttttttt11111
+ttttttt11111
+ttttttt11111
+ttttttt11111
+ttttttt11111
+ttttttt11111
+ttttttt11111
+ttttttt11111
+ttttttt11111
+</textarea>
+ 
+<input type = "button" onclick="test1()" value="至底部" />
+ 
+<input type = "button" onclick="test2()" value="至顶部" />
+ 
+</body>
+</html>
