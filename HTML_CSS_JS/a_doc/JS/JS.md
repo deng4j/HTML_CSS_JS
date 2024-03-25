@@ -2061,7 +2061,7 @@ try {
 
 web storage 数据都包含在浏览器内两个类似于对象的结构中：
 
-- sessionStorage：只要浏览器开着，数据就会一直保存 (关闭浏览器时数据会丢失)
+- sessionStorage：只要页面会话开着，数据就会一直保存 (关闭页面会话时数据会丢失)
 
   ```js
   // 保存数据到 sessionStorage
